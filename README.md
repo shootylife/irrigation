@@ -47,3 +47,7 @@ We are going to analyse this information flow.
 #### Step 1
 
 Fill the `org.sixdouglas.formation.spring.irrigation.DripIrrigation.followDrops` function to make the associated Unit Test runs successfully.
+
+#### Step 2
+
+Then complete the `org.sixdouglas.formation.spring.irrigation.DripIrrigation.followDropper` and `org.sixdouglas.formation.spring.irrigation.producer.GreenHouseProducer.getDrops` functions to make the associated Unit Test runs successfully.
