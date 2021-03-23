@@ -24,7 +24,12 @@ public class DripIrrigation {
     }
 
     public Flux<Drop> followDropper(int greenHouseId, int rowId, int dropperId) {
-        //TODO use the GreenHouseProducer.getDrops() function as producer, but filter the output to fit the given criteria
-        return null;
+        return Flux.interval(Duration.ofMillis(20))
+                .map(along -> Drop.builder().
+                        dropperId(dropperId).
+                        greenHouseId(greenHouseId).
+                        rowId(rowId).
+                        instant(Instant.now()).
+                        build());
     }
 }
