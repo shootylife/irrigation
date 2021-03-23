@@ -8,7 +8,6 @@ import reactor.test.StepVerifier;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +27,7 @@ class DripIrrigationTest {
 
         Flux<Drop> dropFlux = dripIrrigation.followDrops()
                 .limitRequest(5)
-                .timeout(Duration.ofMillis(200));
+                .timeout(Duration.ofMillis(300));
 
         StepVerifier.create(dropFlux).assertNext(drop -> {
             assertEquals(1, drop.getGreenHouseId(), "Greenhouse ID should be 1");
@@ -52,7 +51,7 @@ class DripIrrigationTest {
 
         Flux<Drop> dropFlux = dripIrrigation.followDropper(2, 1, 6)
                 .limitRequest(8)
-                .timeout(Duration.ofMillis(200));
+                .timeout(Duration.ofMillis(300));
 
         StepVerifier.create(dropFlux).assertNext(drop -> {
             assertEquals(2, drop.getGreenHouseId(), "Greenhouse ID should be 2");

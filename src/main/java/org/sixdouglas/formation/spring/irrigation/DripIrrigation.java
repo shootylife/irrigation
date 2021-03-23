@@ -24,7 +24,9 @@ public class DripIrrigation {
     }
 
     public Flux<Drop> followDropper(int greenHouseId, int rowId, int dropperId) {
-        //TODO use the GreenHouseProducer.getDrops() function as producer, but filter the output to fit the given criteria
-        return null;
+        return GreenHouseProducer.getDrops().filter(drop ->
+                drop.getGreenHouseId() == greenHouseId &&
+                drop.getRowId() == rowId &&
+                drop.getDropperId() == dropperId);
     }
 }
