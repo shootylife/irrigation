@@ -78,12 +78,14 @@ public final class GreenHouseProducer {
     public static Flux<Drop> getDrops() {
         Flux<Drop> dropsFlux = Flux.empty();
 
-        //TODO go through all Greenhouses
-        //TODO    go through all Row
-        //TODO       go through all Dropper
-        //TODO          Create a flux that will emit a Drop every 10 millis seconds using the buildDrop() function
-        //TODO          then merge this new flux int the dropsFlux
-
+        for (GreenHouse gh: greenHouses) {
+            for (Row r: gh.getRows()) {
+                for (Dropper d: r.getDroppers()) {
+                    Flux<Drop> newFlux = Flux.interval(Duration.ofMillis(10)).map(aLong -> buildDrop(gh, r, d).block());
+                    dropsFlux = Flux.merge(dropsFlux, newFlux);
+                }
+            }
+        }
         return dropsFlux;
     }
 
@@ -125,6 +127,22 @@ public final class GreenHouseProducer {
     private static Mono<GreenHouse> getJust(GreenHouse house, Row row, Dropper dropper) {
         //TODO Build a new Greenhouse that will contain a newly built Row that will contain a newly built Dropper
         //TODO    using the data of the given objects
-        return Mono.empty();
+
+        return Mono.just(GreenHouse
+                .builder()
+                .id(house.getId())
+                .name(house.getName())
+                .row(Row
+                        .builder()
+                        .id(row.getId())
+                        .name(row.getName())
+                        .dropper(Dropper
+                                .builder()
+                                .id(dropper.getId())
+                                .name(dropper.getName())
+                                .broken(dropper.isBroken())
+                                .build())
+                        .build())
+                .build());
     }
 }

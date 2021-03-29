@@ -52,7 +52,7 @@ class DripIrrigationTest {
 
         Flux<Drop> dropFlux = dripIrrigation.followDropper(2, 1, 6)
                 .limitRequest(8)
-                .timeout(Duration.ofMillis(200));
+                .timeout(Duration.ofMillis(300));
 
         StepVerifier.create(dropFlux).assertNext(drop -> {
             assertEquals(2, drop.getGreenHouseId(), "Greenhouse ID should be 2");
@@ -74,7 +74,7 @@ class DripIrrigationTest {
     void followDetailedDropper() {
         Flux<DetailedDrop> dropFlux = dripIrrigation.followDetailedDropper(2, 1, 6)
                 .limitRequest(3)
-                .timeout(Duration.ofMillis(200));
+                .timeout(Duration.ofMillis(300));
 
         StepVerifier.create(dropFlux)
                 .assertNext(detailedDrop -> {
